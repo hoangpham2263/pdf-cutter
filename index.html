@@ -27,7 +27,7 @@
       <button id="drop" class="drop" type="button">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>
         <strong data-i18n="drop">Kéo thả file PDF vào đây hoặc bấm để chọn</strong>
-        <span class="muted small" data-i18n="dropHint">Mỗi lần một file PDF.</span>
+        <span class="muted small" data-i18n="dropHint">Mỗi lần một file PDF. Mẹo: giữ Shift để chọn nhiều trang liền nhau.</span>
       </button>
       <input id="file" type="file" accept=".pdf,application/pdf" hidden />
 
@@ -56,18 +56,20 @@
         <summary>Công cụ hoạt động như thế nào?</summary>
         <ol>
           <li><b>Chọn file PDF:</b> kéo thả hoặc bấm để chọn. Các trang hiện ra dạng ảnh nhỏ để xem trước.</li>
-          <li><b>Chọn trang cần giữ:</b> bấm vào từng trang để chọn hoặc bỏ chọn, dùng nút "Chọn tất cả / Bỏ chọn / Đảo chọn", hoặc gõ nhanh như <code>1-3, 5, 8</code>.</li>
+          <li><b>Chọn trang cần giữ:</b> bấm vào từng trang để chọn hoặc bỏ chọn, dùng nút "Chọn tất cả / Bỏ chọn / Đảo chọn", hoặc gõ nhanh như <code>1-3, 5, 8</code>. Bấm 1 trang rồi giữ <kbd>Shift</kbd> và bấm trang khác để chọn cả khoảng ở giữa.</li>
           <li><b>Tải về:</b> "Tải PDF các trang đã chọn" gộp các trang đó thành 1 file. "Tách mỗi trang 1 file" tải về file ZIP, mỗi trang đã chọn là 1 PDF riêng.</li>
         </ol>
+        <p><b>Phím tắt:</b> <kbd>Shift</kbd> + bấm: chọn cả khoảng · <kbd>Ctrl/⌘</kbd> + <kbd>A</kbd>: chọn tất cả · <kbd>Ctrl/⌘</kbd> + <kbd>I</kbd>: đảo chọn · <kbd>Esc</kbd>: bỏ chọn · <kbd>Ctrl/⌘</kbd> + <kbd>S</kbd>: tải PDF.</p>
         <p><b>Bên trong:</b> ảnh xem trước được vẽ bằng PDF.js, còn việc cắt trang dùng pdf-lib: chép nguyên các trang được chọn sang file mới nên chữ, link, chất lượng giữ nguyên. Mọi thứ chạy trên máy bạn, file không được tải lên máy chủ nào. File PDF có mật khẩu sẽ không mở được.</p>
       </details>
       <details class="howto" lang="en">
         <summary>How does it work?</summary>
         <ol>
           <li><b>Add a PDF:</b> drag and drop or click to choose. Pages show up as small previews.</li>
-          <li><b>Pick the pages to keep:</b> click pages to toggle them, use "Select all / Clear / Invert", or type something like <code>1-3, 5, 8</code>.</li>
+          <li><b>Pick the pages to keep:</b> click pages to toggle them, use "Select all / Clear / Invert", or type something like <code>1-3, 5, 8</code>. Click one page, then hold <kbd>Shift</kbd> and click another to select everything in between.</li>
           <li><b>Download:</b> "Download selected pages" puts them into one PDF. "One file per page" downloads a ZIP with each selected page as its own PDF.</li>
         </ol>
+        <p><b>Shortcuts:</b> <kbd>Shift</kbd> + click: select a range · <kbd>Ctrl/⌘</kbd> + <kbd>A</kbd>: select all · <kbd>Ctrl/⌘</kbd> + <kbd>I</kbd>: invert · <kbd>Esc</kbd>: clear · <kbd>Ctrl/⌘</kbd> + <kbd>S</kbd>: download PDF.</p>
         <p><b>Under the hood:</b> previews are drawn with PDF.js and pages are cut with pdf-lib, which copies the chosen pages as-is, so text, links and quality stay the same. Everything runs on your device; nothing is uploaded. Password-protected PDFs cannot be opened.</p>
       </details>
 

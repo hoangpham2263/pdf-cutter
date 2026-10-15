@@ -7,7 +7,7 @@
       title: "Cắt PDF",
       subtitle: "Chọn trang cần giữ rồi tải về — chạy ngay trên trình duyệt, file không được tải lên đâu cả.",
       drop: "Kéo thả file PDF vào đây hoặc bấm để chọn",
-      dropHint: "Mỗi lần một file PDF.",
+      dropHint: "Mỗi lần một file PDF. Mẹo: giữ Shift để chọn nhiều trang liền nhau.",
       all: "Chọn tất cả",
       none: "Bỏ chọn",
       invert: "Đảo chọn",
@@ -28,7 +28,7 @@
       title: "PDF cutter",
       subtitle: "Pick the pages to keep and download them — runs in your browser, nothing is uploaded.",
       drop: "Drop a PDF here or click to choose",
-      dropHint: "One PDF at a time.",
+      dropHint: "One PDF at a time. Tip: hold Shift to select a run of pages.",
       all: "Select all",
       none: "Clear",
       invert: "Invert",
@@ -58,6 +58,7 @@
     bytes: null,
     total: 0,
     keep: new Set(),
+    last: null,
     run: 0,
   };
   const t = (k) => TEXT[state.lang][k];
@@ -85,6 +86,7 @@
     state.file = file;
     state.total = 0;
     state.keep = new Set();
+    state.last = null;
     $("fname").textContent = file.name;
     $("pages").replaceChildren();
     $("range").value = "";
@@ -183,10 +185,31 @@
     const el = e.target.closest(".page");
     if (!el) return;
     const i = Number(el.dataset.i);
-    state.keep.has(i) ? state.keep.delete(i) : state.keep.add(i);
+    if (e.shiftKey && state.last != null) {
+      // Shift + click: apply the clicked page's new state to the whole range
+      const on = !state.keep.has(i);
+      for (let p = Math.min(state.last, i); p <= Math.max(state.last, i); p++) on ? state.keep.add(p) : state.keep.delete(p);
+    } else {
+      state.keep.has(i) ? state.keep.delete(i) : state.keep.add(i);
+    }
+    state.last = i;
     $("range").value = "";
     sync();
   };
+  // Shift + click should not select text
+  $("pages").onmousedown = (e) => e.shiftKey && e.preventDefault();
+  // Keyboard: Ctrl/Cmd + A select all, Ctrl/Cmd + I invert, Esc clear, Ctrl/Cmd + S download
+  window.addEventListener("keydown", (e) => {
+    if (!state.total || e.target.closest?.("input")) return;
+    const mod = e.metaKey || e.ctrlKey;
+    const key = e.key.toLowerCase();
+    if (mod && key === "a") $("all").click();
+    else if (mod && key === "i") $("invert").click();
+    else if (mod && key === "s") { if (state.keep.size) $("save").click(); }
+    else if (e.key === "Escape") $("none").click();
+    else return;
+    e.preventDefault();
+  });
   $("all").onclick = () => { state.keep = new Set([...Array(state.total).keys()]); sync(); };
   $("none").onclick = () => { state.keep = new Set(); sync(); };
   $("invert").onclick = () => {

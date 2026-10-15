@@ -17,6 +17,7 @@
       selected: (n, total) => `Đã chọn ${n}/${total} trang`,
       loading: "Đang mở file…",
       page: "Trang",
+      preview: "Xem lớn",
       error: "Không mở được file này (file hỏng hoặc có mật khẩu).",
       footer: "Làm bởi",
       switchTo: "EN",
@@ -38,6 +39,7 @@
       selected: (n, total) => `${n}/${total} pages selected`,
       loading: "Opening file…",
       page: "Page",
+      preview: "Preview",
       error: "Could not open this file (damaged or password-protected).",
       footer: "Made by",
       switchTo: "VI",
@@ -95,6 +97,7 @@
     try {
       state.bytes = new Uint8Array(await file.arrayBuffer());
       const doc = await pdfjsLib.getDocument({ data: state.bytes.slice() }).promise;
+      state.doc = doc;
       if (run !== state.run) return;
       state.total = doc.numPages;
       for (let i = 0; i < doc.numPages; i++) state.keep.add(i);
@@ -104,7 +107,8 @@
         b.type = "button";
         b.className = "page on";
         b.dataset.i = i;
-        b.innerHTML = `<canvas></canvas><span></span><i class="check">✓</i>`;
+        b.innerHTML = `<canvas></canvas><span></span><i class="check">✓</i><i class="zoom" title="">⤢</i>`;
+        b.querySelector(".zoom").title = t("preview");
         b.querySelector("span").textContent = `${t("page")} ${i + 1}`;
         cards.push(b);
       }
@@ -127,6 +131,22 @@
       $("summary").textContent = t("error");
       $("summary").className = "small warn";
     }
+  }
+
+  // Render one page large and open it in the lightbox
+  async function previewPage(i) {
+    if (!state.doc) return;
+    const page = await state.doc.getPage(i + 1);
+    const vp0 = page.getViewport({ scale: 1 });
+    const vp = page.getViewport({ scale: 1600 / vp0.width });
+    const canvas = document.createElement("canvas");
+    canvas.width = vp.width;
+    canvas.height = vp.height;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    await page.render({ canvasContext: ctx, viewport: vp, intent: "print" }).promise;
+    openPreview([{ src: canvas.toDataURL("image/jpeg", 0.9), caption: `${t("page")} ${i + 1}/${state.total}` }]);
   }
 
   // "1-3, 5, 8" -> zero-based page indexes
@@ -184,6 +204,7 @@
   $("pages").onclick = (e) => {
     const el = e.target.closest(".page");
     if (!el) return;
+    if (e.target.closest(".zoom")) return previewPage(Number(el.dataset.i));
     const i = Number(el.dataset.i);
     if (e.shiftKey && state.last != null) {
       // Shift + click: apply the clicked page's new state to the whole range
@@ -200,7 +221,7 @@
   $("pages").onmousedown = (e) => e.shiftKey && e.preventDefault();
   // Keyboard: Ctrl/Cmd + A select all, Ctrl/Cmd + I invert, Esc clear, Ctrl/Cmd + S download
   window.addEventListener("keydown", (e) => {
-    if (!state.total || e.target.closest?.("input")) return;
+    if (!state.total || e.target.closest?.("input") || document.querySelector(".lb.open")) return;
     const mod = e.metaKey || e.ctrlKey;
     const key = e.key.toLowerCase();
     if (mod && key === "a") $("all").click();

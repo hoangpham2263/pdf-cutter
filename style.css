@@ -176,3 +176,9 @@ html[lang="vi"] .howto[lang="en"], html[lang="en"] .howto[lang="vi"] { display: 
 @media (min-width: 1024px) { .wrap { padding-left: 32px; padding-right: 32px; } }
 kbd { font: 600 11.5px ui-monospace, monospace; padding: 1px 5px; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px; background: var(--soft); color: var(--fg); }
 .pages { user-select: none; }
+/* Page grid: 10 per row on desktop, fewer on smaller screens */
+.pages { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (min-width: 640px) { .pages { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 900px) { .pages { grid-template-columns: repeat(7, 1fr); } }
+@media (min-width: 1200px) { .pages { grid-template-columns: repeat(10, 1fr); } }
+.page .check { top: 8px; right: 8px; width: 20px; height: 20px; font-size: 12px; }

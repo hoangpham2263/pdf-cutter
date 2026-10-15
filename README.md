@@ -4,7 +4,6 @@ Cắt file PDF ngay trên trình duyệt: xem trước từng trang, chọn tran
 
 **Dùng thử:** https://hoangpham.is-a.dev/pdf-cutter/
 
-![PDF Cutter](screenshot.webp)
 
 ## Tính năng
 

@@ -194,3 +194,6 @@ kbd { font: 600 11.5px ui-monospace, monospace; padding: 1px 5px; border: 1px so
   h1 { font-size: 22px; }
   .top p { font-size: 13.5px; }
 }
+
+/* Option buttons: regular text weight */
+.seg button, .seg button b, .seg-q b { font-weight: 400; }

@@ -119,7 +119,7 @@
         const canvas = cards[i].querySelector("canvas");
         canvas.width = vp.width;
         canvas.height = vp.height;
-        await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+        await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp, intent: "print" }).promise; // "print" avoids rAF, so it also runs in background tabs
       }
     } catch (e) {
       console.error(e);

@@ -166,7 +166,6 @@ html[lang="vi"] .howto[lang="en"], html[lang="en"] .howto[lang="vi"] { display: 
 }
 .page.on { border-color: var(--primary); color: var(--fg); }
 .page.on .check { background: var(--primary); border-color: var(--primary); color: #fff; }
-.page:not(.on) canvas { opacity: .45; }
 .file-row { display: flex; align-items: center; gap: 12px; }
 .file-row .info { flex: 1; min-width: 0; }
 .file-row .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

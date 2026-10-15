@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PDF Cutter – Cắt PDF, chọn trang cần giữ</title>
+    <meta name="description" content="Cắt file PDF ngay trên trình duyệt: xem trước từng trang, chọn trang cần giữ rồi tải về — file không được tải lên đâu cả." />
+    <link rel="icon" href="brand/favicon.ico" sizes="any" />
+    <link rel="icon" href="brand/hp-favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="top">
+        <a class="brand" href="https://hoangpham.is-a.dev" title="HoangPham" aria-label="HoangPham"><img src="brand/hp-icon.svg" alt="HoangPham" width="40" height="40" /></a>
+        <div class="top-text">
+          <h1 data-i18n="title">Cắt PDF</h1>
+          <p class="muted" data-i18n="subtitle">Chọn trang cần giữ rồi tải về — chạy ngay trên trình duyệt, file không được tải lên đâu cả.</p>
+        </div>
+        <div class="top-actions">
+          <button id="lang" class="ghost" type="button" title="English">EN</button>
+          <a class="ghost" href="https://github.com/hoangpham2263/pdf-cutter" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </header>
+
+      <button id="drop" class="drop" type="button">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg>
+        <strong data-i18n="drop">Kéo thả file PDF vào đây hoặc bấm để chọn</strong>
+        <span class="muted small" data-i18n="dropHint">Mỗi lần một file PDF.</span>
+      </button>
+      <input id="file" type="file" accept=".pdf,application/pdf" hidden />
+
+      <section id="result" class="convert" hidden>
+        <div class="file-row">
+          <span class="badge pdf">PDF</span>
+          <div class="info">
+            <div class="name" id="fname"></div>
+            <div class="muted small" id="summary"></div>
+          </div>
+        </div>
+        <div class="tools">
+          <button id="all" class="outline" type="button" data-i18n="all">Chọn tất cả</button>
+          <button id="none" class="outline" type="button" data-i18n="none">Bỏ chọn</button>
+          <button id="invert" class="outline" type="button" data-i18n="invert">Đảo chọn</button>
+          <input id="range" type="text" data-i18n-ph="rangePh" placeholder="Hoặc gõ trang, ví dụ: 1-3, 5, 8" />
+        </div>
+        <div class="tools">
+          <button id="save" class="primary" type="button" data-i18n="save">Tải PDF các trang đã chọn</button>
+          <button id="split" class="outline" type="button" data-i18n="split">Tách mỗi trang 1 file (ZIP)</button>
+        </div>
+        <div id="pages" class="pages"></div>
+      </section>
+
+      <details class="howto" lang="vi">
+        <summary>Công cụ hoạt động như thế nào?</summary>
+        <ol>
+          <li><b>Chọn file PDF:</b> kéo thả hoặc bấm để chọn. Các trang hiện ra dạng ảnh nhỏ để xem trước.</li>
+          <li><b>Chọn trang cần giữ:</b> bấm vào từng trang để chọn hoặc bỏ chọn, dùng nút "Chọn tất cả / Bỏ chọn / Đảo chọn", hoặc gõ nhanh như <code>1-3, 5, 8</code>.</li>
+          <li><b>Tải về:</b> "Tải PDF các trang đã chọn" gộp các trang đó thành 1 file. "Tách mỗi trang 1 file" tải về file ZIP, mỗi trang đã chọn là 1 PDF riêng.</li>
+        </ol>
+        <p><b>Bên trong:</b> ảnh xem trước được vẽ bằng PDF.js, còn việc cắt trang dùng pdf-lib: chép nguyên các trang được chọn sang file mới nên chữ, link, chất lượng giữ nguyên. Mọi thứ chạy trên máy bạn, file không được tải lên máy chủ nào. File PDF có mật khẩu sẽ không mở được.</p>
+      </details>
+      <details class="howto" lang="en">
+        <summary>How does it work?</summary>
+        <ol>
+          <li><b>Add a PDF:</b> drag and drop or click to choose. Pages show up as small previews.</li>
+          <li><b>Pick the pages to keep:</b> click pages to toggle them, use "Select all / Clear / Invert", or type something like <code>1-3, 5, 8</code>.</li>
+          <li><b>Download:</b> "Download selected pages" puts them into one PDF. "One file per page" downloads a ZIP with each selected page as its own PDF.</li>
+        </ol>
+        <p><b>Under the hood:</b> previews are drawn with PDF.js and pages are cut with pdf-lib, which copies the chosen pages as-is, so text, links and quality stay the same. Everything runs on your device; nothing is uploaded. Password-protected PDFs cannot be opened.</p>
+      </details>
+
+      <footer class="muted small">
+        <span data-i18n="footer">Làm bởi</span>
+        <a href="https://hoangpham.is-a.dev" target="_blank" rel="noopener">Phạm Quốc Hoàng</a> · MIT
+      </footer>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,11 +1,13 @@
-# PDF Cutter
+# PDF Tools
 
-Cắt file PDF ngay trên trình duyệt: xem trước từng trang, chọn trang cần giữ rồi tải về — file không được tải lên server nào.
+Cắt và gộp file PDF ngay trên trình duyệt — file không được tải lên server nào.
 
-**Dùng thử:** https://hoangpham.is-a.dev/pdf-cutter/
+**Dùng thử:** https://hoangpham.is-a.dev/pdf-tools/
 
 
 ## Tính năng
+
+### Cắt PDF
 
 - Xem trước tất cả các trang dạng ảnh nhỏ.
 - Bấm để chọn / bỏ chọn trang, hoặc dùng "Chọn tất cả", "Bỏ chọn", "Đảo chọn".
@@ -13,6 +15,13 @@ Cắt file PDF ngay trên trình duyệt: xem trước từng trang, chọn tran
 - Gõ nhanh trang cần giữ: `1-3, 5, 8` hoặc `4-` (từ trang 4 đến hết).
 - Tải 1 file PDF gồm các trang đã chọn, hoặc tách mỗi trang thành 1 file (ZIP).
 - Giao diện tiếng Việt / English, hỗ trợ dark mode.
+
+### Gộp PDF
+
+- Thêm nhiều file PDF, mỗi file hiện ảnh trang đầu và số trang.
+- Sắp xếp thứ tự bằng nút ↑ ↓ hoặc kéo thả từng dòng.
+- Gộp thành 1 file, các trang được chép nguyên (chữ, link, chất lượng giữ nguyên).
+- Link `#merge` mở thẳng tab Gộp; trang nhớ tab dùng lần trước.
 
 ## Cách hoạt động
 

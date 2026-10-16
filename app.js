@@ -4,7 +4,6 @@
 
   const TEXT = {
     vi: {
-      title: "Cắt PDF",
       subtitle: "Chọn trang cần giữ rồi tải về — chạy ngay trên trình duyệt, file không được tải lên đâu cả.",
       drop: "Kéo thả file PDF vào đây hoặc bấm để chọn",
       dropHint: "Mỗi lần một file PDF. Mẹo: giữ Shift để chọn nhiều trang liền nhau.",
@@ -26,7 +25,6 @@
       pageSuffix: "trang",
     },
     en: {
-      title: "PDF cutter",
       subtitle: "Pick the pages to keep and download them — runs in your browser, nothing is uploaded.",
       drop: "Drop a PDF here or click to choose",
       dropHint: "One PDF at a time. Tip: hold Shift to select a run of pages.",
@@ -221,7 +219,7 @@
   $("pages").onmousedown = (e) => e.shiftKey && e.preventDefault();
   // Keyboard: Ctrl/Cmd + A select all, Ctrl/Cmd + I invert, Esc clear, Ctrl/Cmd + S download
   window.addEventListener("keydown", (e) => {
-    if (!state.total || e.target.closest?.("input") || document.querySelector(".lb.open")) return;
+    if (!state.total || e.target.closest?.("input") || document.querySelector(".lb.open") || $("tab-cut").hidden) return;
     const mod = e.metaKey || e.ctrlKey;
     const key = e.key.toLowerCase();
     if (mod && key === "a") $("all").click();
